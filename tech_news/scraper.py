@@ -28,9 +28,13 @@ def scrape_updates(html_content):
     links = selector.css("h2.entry-title a::attr(href)").getall()
     return links
 
+
 # Requisito 3
 def scrape_next_page_link(html_content):
     """Seu código deve vir aqui"""
+    selector = Selector(html_content)
+    next_page = selector.css("a.next.page-numbers::attr(href)").get()
+    return next_page
 
 
 # Requisito 4
