@@ -1,5 +1,6 @@
 import requests
 import time
+from parsel import Selector
 
 # Requisito 1
 
@@ -7,13 +8,12 @@ import time
 def fetch(url):
     """Seu código deve vir aqui"""
     headers = {"user-agent": "Fake user-agent"}
-    time.sleep(1)  # garante um intervalo de 1 segundo entre cada requisição
+    time.sleep(1)
     try:
         response = requests.get(
             url, headers=headers, timeout=3
-        )  # especifica um timeout de 3 segundos
+        )
         if response.status_code == 200:
-            print(response.text)
             return response.text
         else:
             return None
@@ -24,7 +24,9 @@ def fetch(url):
 # Requisito 2
 def scrape_updates(html_content):
     """Seu código deve vir aqui"""
-
+    selector = Selector(html_content)
+    links = selector.css("h2.entry-title a::attr(href)").getall()
+    return links
 
 # Requisito 3
 def scrape_next_page_link(html_content):
